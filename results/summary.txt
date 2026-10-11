@@ -1,0 +1,27 @@
+Pair: LLY vs NVO, 2018-01-02 to 2026-10-09 (2205 trading days)
+
+Relationship
+  Correlation of daily returns:          0.40
+  Engle-Granger cointegration p-value:   0.990 (not cointegrated at 5% over the whole period)
+  Rolling 1-year windows cointegrated:   10% of 94 windows
+  Hedge ratio (whole period):            1.30
+  Half-life of the spread:               inf trading days
+
+Strategy (entry 2.0, exit 0.5, stop 4.0 standard deviations; costs 5 bps per trade)
+  Total return:          -55.5%
+  Annual return:         -10.2%
+  Annual volatility:     16.6%
+  Sharpe ratio:          -0.57
+  Maximum drawdown:      -58.8%
+  Trades:                21 (20 closed, win rate 40%)
+  Time in the market:    71%
+
+Return by year
+  2019: -22.2%
+  2020: -8.7%
+  2021: -16.5%
+  2022: +8.6%
+  2023: -14.7%
+  2024: -5.3%
+  2025: -17.0%
+  2026: +3.1%
