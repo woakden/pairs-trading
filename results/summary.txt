@@ -1,27 +1,27 @@
-Pair: LLY vs NVO, 2018-01-02 to 2026-10-09 (2205 trading days)
+Pair: SHEL vs BP, 2018-01-02 to 2026-10-16 (2210 trading days)
 
 Relationship
-  Correlation of daily returns:          0.40
-  Engle-Granger cointegration p-value:   0.990 (not cointegrated at 5% over the whole period)
-  Rolling 1-year windows cointegrated:   10% of 94 windows
-  Hedge ratio (whole period):            1.30
-  Half-life of the spread:               inf trading days
+  Correlation of daily returns:          0.88
+  Engle-Granger cointegration p-value:   0.159 (not cointegrated at 5% over the whole period)
+  Rolling 1-year windows cointegrated:   2% of 94 windows
+  Hedge ratio (whole period):            1.21
+  Half-life of the spread:               97 trading days
 
 Strategy (entry 2.0, exit 0.5, stop 4.0 standard deviations; costs 5 bps per trade)
-  Total return:          -55.5%
-  Annual return:         -10.2%
-  Annual volatility:     16.6%
-  Sharpe ratio:          -0.57
-  Maximum drawdown:      -58.8%
-  Trades:                21 (20 closed, win rate 40%)
-  Time in the market:    71%
+  Total return:          +28.9%
+  Annual return:         +3.4%
+  Annual volatility:     7.8%
+  Sharpe ratio:          0.47
+  Maximum drawdown:      -13.7%
+  Trades:                16 (15 closed, win rate 60%)
+  Time in the market:    74%
 
 Return by year
-  2019: -22.2%
-  2020: -8.7%
-  2021: -16.5%
-  2022: +8.6%
-  2023: -14.7%
-  2024: -5.3%
-  2025: -17.0%
-  2026: +3.1%
+  2019: +1.4%
+  2020: -0.4%
+  2021: -0.9%
+  2022: +8.2%
+  2023: +4.1%
+  2024: +12.9%
+  2025: +1.6%
+  2026: -0.3%

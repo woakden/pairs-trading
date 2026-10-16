@@ -1,4 +1,4 @@
-"""Pairs trading backtest. By default: Eli Lilly (LLY) against Novo Nordisk (NVO).
+"""Pairs trading backtest. By default: Shell (SHEL) against BP (BP).
 
 Usage:
     python3 run.py                      # download prices and run with the defaults in config.py

@@ -1,9 +1,9 @@
 """Default settings. Every one can be overridden from the command line (see run.py --help)."""
 
 # The pair: Y is regressed on X, so the spread is log(Y) - beta * log(X).
-# Novo Nordisk uses its New York listing (NVO, in US dollars) so both legs are in the same currency.
-TICKER_Y = "LLY"   # Eli Lilly
-TICKER_X = "NVO"   # Novo Nordisk (NYSE ADR)
+# Both use their New York listings (in US dollars) so the two legs are in the same currency.
+TICKER_Y = "SHEL"  # Shell (NYSE)
+TICKER_X = "BP"    # BP (NYSE ADR)
 START = "2018-01-01"
 
 # Hedge ratio: rolling least-squares regression of log prices over this many trading days (~1 year).

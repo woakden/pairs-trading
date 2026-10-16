@@ -1,35 +1,38 @@
-# Pairs trading: Eli Lilly vs Novo Nordisk
+# Pairs trading: Shell vs BP
 
-A Python backtest of a pairs trading strategy on Eli Lilly (LLY) and Novo Nordisk (NVO).
+A Python backtest of a pairs trading strategy on Shell (SHEL) and BP (BP).
 
 **Pairs trading** looks for two stocks whose prices usually move together. When the gap between them stretches further than usual, it buys the cheaper one and sells the dearer one, betting that the gap will close. Because it is long one stock and short the other, it is mostly protected from the market as a whole moving up or down.
 
 ## Why this pair
 
-Lilly and Novo Nordisk lead the market for GLP-1 drugs for diabetes and obesity (Lilly's Mounjaro and Zepbound, Novo's Ozempic and Wegovy). They respond to much of the same news: demand for weight-loss drugs, pricing pressure, regulation and supply.
+Shell and BP are the two London-headquartered oil majors. They produce, refine and sell the same products in many of the same markets, so their profits respond to the same things: oil and gas prices, refining margins, windfall taxes and the pace of the energy transition. That gives a reason for their share prices to move together over the long run, which is what a pairs trade relies on.
 
-They are also direct rivals, so when one wins market share the other can lose it, and that can break the link between their prices. The project tests whether the relationship is stable enough to trade, rather than assuming it.
+They can still drift apart when one company's strategy or execution differs from the other's, for example BP's shift towards renewables from 2020 and its strategy reset back towards oil and gas in February 2025. The project tests whether the relationship is stable enough to trade, rather than assuming it.
 
-Novo Nordisk's New York listing (NVO, in US dollars) is used so that both stocks are in the same currency.
+Both stocks use their New York listings (in US dollars) so the two legs are in the same currency.
 
-## Results (2 Jan 2018 to 9 Oct 2026)
+## Results (2 Jan 2018 to 16 Oct 2026)
 
-**The pair did not hold together, and the strategy lost money.**
+**The two stocks moved closely together and the strategy made money, but the relationship was not stable enough to be statistically reliable.**
 
 | | |
 |---|---|
-| Correlation of daily returns | 0.40 |
-| Engle-Granger p-value, whole period | 0.99 (not cointegrated) |
-| Rolling one-year windows cointegrated | 10% of 94 |
-| Half-life of the spread | none (the spread did not revert) |
-| Strategy total return, after costs | -55.5% (-10.2% a year) |
-| Sharpe ratio | -0.57 |
-| Maximum drawdown | -58.8% |
-| Trades | 21, of which 40% of the closed ones made money |
+| Correlation of daily returns | 0.88 |
+| Engle-Granger p-value, whole period | 0.16 (not cointegrated at 5%) |
+| Rolling one-year windows cointegrated | 2% of 94 |
+| Half-life of the spread | 97 trading days |
+| Strategy total return, after costs | +28.9% (+3.4% a year) |
+| Annual volatility | 7.8% |
+| Sharpe ratio | 0.47 |
+| Maximum drawdown | -13.7% |
+| Trades | 16, of which 60% of the closed ones made money |
 
-The two stocks moved together day to day, but not over the long run. Lilly rose from $75 to $1,179 over the period, while Novo Nordisk peaked at $136 in June 2024 and then fell to $39, as Lilly's Mounjaro and Zepbound took market share from Ozempic and Wegovy. So the gap between them kept widening instead of closing, and a strategy that bets on it closing kept losing: it lost money in 6 of the 7 full years it traded (2019 to 2025).
+Day to day, Shell and BP moved together very closely (a correlation of 0.88). The gap between them also tended to close, but slowly: the half-life of 97 trading days means a typical gap took around four to five months to halve. Over the whole period, though, the cointegration test does not pass at the 5% level, because Shell steadily pulled ahead from 2023 onwards: Shell's price divided by BP's rose from 1.71 at the end of 2022 to 2.18 at the end of 2024.
 
-The lesson is that a shared industry is not enough. A pairs trade needs a stable relationship, and direct rivals in a market that one of them is winning are a poor candidate. The rolling cointegration chart shows the test would have warned against trading this pair for most of the period, so a natural next step is to trade only while the pair passes that test.
+The strategy made +28.9% after costs. Its best year was 2024 (+12.9%), and it lost less than 1% in each of its losing years (2020, 2021 and 2026 so far). That is a modest return with low volatility, but it comes from 16 trades over almost nine years, which is too few to show the strategy has a real edge rather than luck.
+
+The lesson is that a strong correlation is not the same as a stable long-run relationship. A natural next step is to trade only while the rolling cointegration test passes, and to test the same rules on other pairs from the same industry before trusting them.
 
 Charts: [prices](results/1_prices.png), [z-score and trades](results/2_zscore_and_trades.png), [strategy value](results/3_equity_curve.png), [rolling cointegration](results/4_rolling_cointegration.png).
 
@@ -37,14 +40,14 @@ Charts: [prices](results/1_prices.png), [z-score and trades](results/2_zscore_an
 
 1. **Prices:** daily closing prices adjusted for splits and dividends, from Yahoo Finance, since 2018.
 2. **Cointegration test:** an Engle-Granger test checks whether the two log prices share a long-run relationship (p-value below 0.05). It is run over the whole period and on rolling one-year windows, to show when the relationship held and when it broke.
-3. **Spread:** `spread = log(LLY) - beta * log(NVO)`, where the hedge ratio `beta` comes from a rolling one-year regression, so it adapts as the relationship changes.
+3. **Spread:** `spread = log(SHEL) - beta * log(BP)`, where the hedge ratio `beta` comes from a rolling one-year regression, so it adapts as the relationship changes.
 4. **Z-score:** how many standard deviations the spread is from its 60-day average.
 5. **Trading rules:**
 
 | Rule | Default |
 |---|---|
-| Short the spread (sell LLY, buy NVO) | z-score above +2.0 |
-| Buy the spread (buy LLY, sell NVO) | z-score below -2.0 |
+| Short the spread (sell SHEL, buy BP) | z-score above +2.0 |
+| Buy the spread (buy SHEL, sell BP) | z-score below -2.0 |
 | Close the trade | z-score back within ±0.5 |
 | Stop-loss | z-score beyond ±4.0, then wait until it is back inside ±2.0 |
 | Trading costs | 5 basis points per trade |
@@ -64,7 +67,7 @@ pip install -r requirements.txt
 
 python3 run.py                               # download prices and run with the defaults
 python3 run.py --entry 1.5 --stop 3.5        # try different rules
-python3 run.py --csv data/LLY_NVO_<date>.csv # rerun on saved prices without downloading
+python3 run.py --csv data/SHEL_BP_<date>.csv # rerun on saved prices without downloading
 python3 run.py --y KO --x PEP                # any other pair
 python3 -m unittest discover tests           # tests (use simulated prices, no download)
 ```
@@ -87,4 +90,4 @@ Saved to `results/`:
 - It assumes trades happen at the closing price used to make the decision (`--lag 2` waits a day).
 - The hedge is rebalanced every day without charging costs for it, and the cost of borrowing stock to short it is ignored.
 - One pair, tested over one period. Changing the rules after seeing the results would overfit them to the past.
-- Cointegration found in the past doesn't guarantee it will continue, especially between rivals.
+- Cointegration found in the past doesn't guarantee it will continue, and with only 16 trades the results could be down to luck.
